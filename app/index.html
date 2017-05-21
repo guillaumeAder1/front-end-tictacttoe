@@ -51,7 +51,7 @@
     </div>
 
     <div class="container">
-        <div ng-view=""></div>
+        <!--<div ng-view=""></div>-->
 
         <div ng-controller="MainCtrl">
             <input ng-model="toto" />
@@ -61,6 +61,9 @@
                 {{user}}
             </div>
             <button ng-click='getUserList()'>click</button>
+
+            <button ng-click="getConnected()">connected user</button>
+            <div ng-repeat="user in connected">{{user.name}}</div>
         </div>
     </div>
 
@@ -156,13 +159,19 @@
             io.socket.on("toto", function(d) {
                 console.log(d)
             })
+
         }
 
         io.sails.url = "http://127.0.0.1:1337/"
 
 
 
+        io.socket.get("user/getallusers", function(d) {
+            io.socket.on("getListUsers", function(e) {
+                console.log(e)
 
+            })
+        })
 
         // io.sails.connect("http://localhost:1337/", function(e) {
         //     console.log(e)
@@ -178,6 +187,9 @@
             console.log("connected")
         })
 
+        io.socket.on('user', function onServerSentEvent(e) {
+            console.log(e)
+        });
         // io.socket.get("http://localhost:1337/user/send/dodo", function(d) {
         //     console.log("connected")
         // });

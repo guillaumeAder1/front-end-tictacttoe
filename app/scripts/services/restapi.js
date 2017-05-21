@@ -19,7 +19,7 @@ angular.module('frontendApp')
         return {
 
             addUser: function(name) {
-                return $http.get(path + "user/create?username='" + name + "'").then(function(res) {
+                return $http.get(path + "user/create?name=" + name + "&status=connected").then(function(res) {
                     console.log(res)
                 });
             },
@@ -27,6 +27,12 @@ angular.module('frontendApp')
                 return $http.get(path + "user/").then(function(res) {
                     return res.data;
                 });
+            },
+
+            getUserConnected: function() {
+                return $http.get(path + "user/getAllUsers").then(function(res) {
+                    return res.data
+                })
             },
             someMethod: function() {
                 return meaningOfLife;
