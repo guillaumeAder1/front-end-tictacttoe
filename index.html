@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+    <h3 onclick="doreq()">test</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- EXAMPLE CDN SOCKET IO -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>-->
+    <!-- IF SAILS SERVER IS RUNNING : USE ITS LOCAL COPY OF SAILS.SOCKET.IO -->
+    <!--<script src="/bower_components/socket.io.js"></script>-->
+
+    <script src="http://sails-tictactoe.herokuapp.com/js/dependencies/sails.io.js"></script>
+
+    <script type="text/javascript">
+        function doreq() {
+
+            io.socket.get('/user/sendmessage/hello', function serverResponded(body, JWR) {
+
+                // JWR ==> "JSON WebSocket Response"
+                console.log('Sails responded with: ', body);
+                console.log('with headers: ', JWR.headers);
+                console.log('and with status code: ', JWR.statusCode);
+
+                // first argument `body` === `JWR.body`
+                // (just for convenience, and to maintain familiar usage, a la `JQuery.get()`)
+            });
+
+            io.socket.on("toto", function(e) {
+                console.log(e)
+            })
+        }
+        //io.sails.useCORSRouteToGetCookie = false;
+        io.sails.url = "http://sails-tictactoe.herokuapp.com"
+
+
+
+
+
+
+        // io.sails.connect("http://localhost:1337/", function(e) {
+        //     console.log(e)
+        // });
+        io.socket.get("/user/sendmessage/", function(d) {
+            console.log("connected")
+        })
+
+        io.socket.on("anevent", function(d) {
+            console.log("connected")
+        })
+        io.socket.on("connect", function(d) {
+            console.log("connected")
+        })
+
+        // io.socket.get("http://localhost:1337/user/send/dodo", function(d) {
+        //     console.log("connected")
+        // });
+    </script>
+
+    <script type="text/javascript">
+        // remote SOCKET 
+        //var socket = io.connect("https://secure-savannah-34238.herokuapp.com");
+
+
+        // socket.on('connect', function(data) {
+        //     var name = prompt("Enter your name");
+        //     if (name) {
+        //         socket.emit('join', name);
+        //     }
+
+        //     socket.on("message", function(user) {
+        //         console.log(user);
+        //     });
+
+
+
+        /***********************************************/
+        /***********************************************/
+        // TEST AJAX CALL TO REMOTE API
+        // var xmlhttp = new XMLHttpRequest();
+        // xmlhttp.onreadystatechange = function() {
+        //     if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+        //         if (xmlhttp.status == 200) {
+        //             console.log("AJAX results success")
+        //                 //document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+        //         } else if (xmlhttp.status == 400) {
+        //             alert('There was an error 400');
+        //         } else {
+        //             alert('something else other than 200 was returned');
+        //         }
+        //     }
+        // };
+        // xmlhttp.open("GET", "http://localhost:1337/user/", true);
+        // xmlhttp.send();
+        /***********************************************/
+        /***********************************************/
+        /***********************************************/
+        // });
+    </script>
+</body>
+
+</html>

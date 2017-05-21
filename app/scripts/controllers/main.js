@@ -8,10 +8,20 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('MainCtrl', function($scope, restApi) {
+        $scope.toto = "toto";
+        $scope.users = [];
+        $scope.newUser = function() {
+            restApi.addUser($scope.toto).then(function(res) {
+                console.log(res);
+            });
+
+            console.log($scope.toto);
+        };
+
+        $scope.getUserList = function() {
+            restApi.getUsers().then(function(res) {
+                $scope.users = res;
+            });
+        }
+    });
