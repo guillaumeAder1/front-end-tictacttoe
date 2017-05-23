@@ -57,8 +57,9 @@
             <input ng-model="toto" />
             <button ng-click='newUser()'>click</button>
 
-            <div ng-repeat="user in users track by $index">
-                {{user}}
+            <div ng-click="selectPlayer($index)" ng-repeat="user in users track by $index">
+                <span>{{user.name}} - </span>
+                <span>{{user.status}}</span>
             </div>
             <!--<button ng-click='getUserList()'>click</button>
 
