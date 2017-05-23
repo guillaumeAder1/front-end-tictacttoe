@@ -12,6 +12,7 @@ angular.module('frontendApp')
         $scope.toto = "toto";
         $scope.users = [];
         $scope.connected = [];
+        $scope.userId = "";
         //var io = io;
         $scope.newUser = function() {
 
@@ -38,4 +39,8 @@ angular.module('frontendApp')
             $scope.users = d.list
             $scope.$apply();
         })
+
+        $scope.leaveRoom = function() {
+            // io.socket.
+        }
     });
