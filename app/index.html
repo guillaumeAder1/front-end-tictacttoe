@@ -57,13 +57,13 @@
             <input ng-model="toto" />
             <button ng-click='newUser()'>click</button>
 
-            <div ng-repeat="user in users">
+            <div ng-repeat="user in users track by $index">
                 {{user}}
             </div>
             <button ng-click='getUserList()'>click</button>
 
             <button ng-click="getConnected()">connected user</button>
-            <div ng-repeat="user in connected">{{user.name}}</div>
+            <!--<div ng-repeat="user in connected">{{user}}</div>-->
         </div>
     </div>
 
@@ -135,100 +135,15 @@
     <script src="http://127.0.0.1:1337/js/dependencies/sails.io.js"></script>
 
     <script type="text/javascript">
-        function doreq() {
-            io.socket.get('/user/create?name="toto"', function serverResponded(body, JWR) {
+        io.sails.url = "http://127.0.0.1:1337/";
 
-                // JWR ==> "JSON WebSocket Response"
-                console.log('Sails responded with: ', body);
-                console.log('with headers: ', JWR.headers);
-                console.log('and with status code: ', JWR.statusCode);
-
-                // first argument `body` === `JWR.body`
-                // (just for convenience, and to maintain familiar usage, a la `JQuery.get()`)
-            });
-
-            io.socket.get("/user/sendmessage/hello", function(body, jwr) {
-                console.log('Sails responded with: ', body);
-                io.socket.on('response-event', function(d, e) {
-                    console.log(d, e)
-                })
-
-            })
-            io.socket.get('/user', function serverResponded(body, JWR) {
-
-                // JWR ==> "JSON WebSocket Response"
-                console.log('Sails responded with: ', body);
-                console.log('with headers: ', JWR.headers);
-                console.log('and with status code: ', JWR.statusCode);
-
-
-                // first argument `body` === `JWR.body`
-                // (just for convenience, and to maintain familiar usage, a la `JQuery.get()`)
-            });
-
-            io.socket.on('response-event', function(d, e) {
-                console.log(d, e)
-            })
-            io.socket.on("toto", function(d) {
-                console.log(d)
-            })
-
-        }
-
-        io.sails.url = "http://127.0.0.1:1337/"
-
-
-        io.socket.on('response-event', function(d, e) {
-            console.log(d, e)
-        })
-
-        io.socket.get("user/getallusers", function(d) {
-            io.socket.on("getListUsers", function(e) {
-                console.log(e)
-
-            })
-        })
-
-        // io.sails.connect("http://localhost:1337/", function(e) {
-        //     console.log(e)
-        // });
-        io.socket.get("/user/sendmessage/", function(d) {
-            console.log("connected")
-        })
-
-        io.socket.on("anevent", function(d) {
-            console.log("connected")
-        })
         io.socket.on("connect", function(d) {
             console.log("connected")
-            doreq()
+                //doreq()
         })
-
-        io.socket.on('user', function onServerSentEvent(e) {
-            console.log(e)
-        });
-        // io.socket.get("http://localhost:1337/user/send/dodo", function(d) {
-        //     console.log("connected")
-        // });
     </script>
 
     <script type="text/javascript">
-        // remote SOCKET 
-        //var socket = io.connect("https://secure-savannah-34238.herokuapp.com");
-
-
-        // socket.on('connect', function(data) {
-        //     var name = prompt("Enter your name");
-        //     if (name) {
-        //         socket.emit('join', name);
-        //     }
-
-        //     socket.on("message", function(user) {
-        //         console.log(user);
-        //     });
-
-
-
         /***********************************************/
         /***********************************************/
         // TEST AJAX CALL TO REMOTE API

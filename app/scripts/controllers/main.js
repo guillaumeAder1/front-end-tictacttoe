@@ -12,16 +12,18 @@ angular.module('frontendApp')
         $scope.toto = "toto";
         $scope.users = [];
         $scope.connected = [];
+        //var io = io;
         $scope.newUser = function() {
-            restApi.addUser($scope.toto).then(function(res) {
-                console.log(res);
+
+            io.socket.get("/user/newuser/" + $scope.toto, function(body, jwr) {
+                console.log('Sails responded with: ', body);
             });
             console.log($scope.toto);
         };
 
         $scope.getUserList = function() {
             restApi.getUsers().then(function(res) {
-                $scope.users = res;
+                //$scope.users = res;
             });
         }
 
@@ -31,4 +33,9 @@ angular.module('frontendApp')
             })
 
         }
+
+        io.socket.on('response-event', function(d, e) {
+            $scope.users = d.list
+            $scope.$apply();
+        })
     });
