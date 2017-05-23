@@ -16,7 +16,6 @@ angular.module('frontendApp')
             restApi.addUser($scope.toto).then(function(res) {
                 console.log(res);
             });
-
             console.log($scope.toto);
         };
 

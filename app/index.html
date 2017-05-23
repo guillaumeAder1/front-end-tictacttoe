@@ -74,7 +74,7 @@
     </div>
 
 
-    <button onclick="doreq()">dododo</button>
+    <button>dododo</button>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -146,6 +146,14 @@
                 // first argument `body` === `JWR.body`
                 // (just for convenience, and to maintain familiar usage, a la `JQuery.get()`)
             });
+
+            io.socket.get("/user/sendmessage/hello", function(body, jwr) {
+                console.log('Sails responded with: ', body);
+                io.socket.on('response-event', function(d, e) {
+                    console.log(d, e)
+                })
+
+            })
             io.socket.get('/user', function serverResponded(body, JWR) {
 
                 // JWR ==> "JSON WebSocket Response"
@@ -153,9 +161,14 @@
                 console.log('with headers: ', JWR.headers);
                 console.log('and with status code: ', JWR.statusCode);
 
+
                 // first argument `body` === `JWR.body`
                 // (just for convenience, and to maintain familiar usage, a la `JQuery.get()`)
             });
+
+            io.socket.on('response-event', function(d, e) {
+                console.log(d, e)
+            })
             io.socket.on("toto", function(d) {
                 console.log(d)
             })
@@ -165,6 +178,9 @@
         io.sails.url = "http://127.0.0.1:1337/"
 
 
+        io.socket.on('response-event', function(d, e) {
+            console.log(d, e)
+        })
 
         io.socket.get("user/getallusers", function(d) {
             io.socket.on("getListUsers", function(e) {
@@ -185,6 +201,7 @@
         })
         io.socket.on("connect", function(d) {
             console.log("connected")
+            doreq()
         })
 
         io.socket.on('user', function onServerSentEvent(e) {
