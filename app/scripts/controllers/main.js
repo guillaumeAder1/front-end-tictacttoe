@@ -13,11 +13,21 @@ angular.module('frontendApp')
         $scope.users = [];
         $scope.connected = [];
         $scope.currentUser;
-        //var io = io;
+        $scope.myName = "";
+
         $scope.newUser = function() {
 
             io.socket.get("/user/newuser/" + $scope.toto, function(body, jwr) {
                 console.log('Sails responded with: ', body);
+                $scope.myName = body.name + " - " + body.socketId;
+                $scope.$apply();
+
+                // get list of all users
+                io.socket.get('/user', function(body, jwr) {
+                    console.log(body, jwr);
+                    $scope.users = body;
+                    $scope.$apply();
+                });
             });
         };
 
@@ -35,20 +45,20 @@ angular.module('frontendApp')
         }
 
         io.socket.on('new-user-event', function(d, e) {
-            $scope.users = d.list;
-            $scope.currentUser = d.user;
-            $scope.$apply();
+            // $scope.users = d.list;
+            // $scope.currentUser = d.user;
+            // $scope.$apply();
         })
 
         $scope.selectPlayer = function(index) {
-            var player = $scope.users[index];
-            var data = {
-                player1: player,
-                player2: $scope.currentUser
-            }
-            io.socket.post('/lobby/newgame', { data }, function(e, i) {
-                console.log(e, i);
-            })
+            // var player = $scope.users[index];
+            // var data = {
+            //     player1: player,
+            //     player2: $scope.currentUser
+            // }
+            // io.socket.post('/lobby/newgame', { data }, function(e, i) {
+            //     console.log(e, i);
+            // })
         }
 
         $scope.leaveRoom = function() {
