@@ -12,13 +12,14 @@ angular.module('frontendApp')
         $scope.toto = "toto";
         $scope.users = [];
         $scope.connected = [];
-        $scope.currentUser;
+        $scope.currentUser = '';
         $scope.myName = "";
 
         $scope.newUser = function() {
 
             io.socket.get("/user/newuser/" + $scope.toto, function(body, jwr) {
                 console.log('Sails responded with: ', body);
+                $scope.currentUser = body;
                 $scope.myName = body.name + " - " + body.socketId;
                 $scope.$apply();
 
@@ -51,14 +52,15 @@ angular.module('frontendApp')
         })
 
         $scope.selectPlayer = function(index) {
-            // var player = $scope.users[index];
-            // var data = {
-            //     player1: player,
-            //     player2: $scope.currentUser
-            // }
-            // io.socket.post('/lobby/newgame', { data }, function(e, i) {
-            //     console.log(e, i);
-            // })
+            var roomName = $scope.users[index].socketId + '_' + $scope.currentUser.socketId;
+            var players = [];
+            players.push($scope.users[index]);
+            players.push($scope.currentUser);
+
+            io.socket.post('/room', { name: roomName, players: players }, function(data) {
+                console.log(data)
+                    //io.socekt.post('/room/' + data.name + '/' + $scope.users[index].socketId)
+            });
         }
 
         $scope.leaveRoom = function() {

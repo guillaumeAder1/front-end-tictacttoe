@@ -61,9 +61,10 @@
             <input ng-model="toto" />
             <button ng-click='newUser()'>click</button>
 
-            <div ng-click="selectPlayer($index)" ng-repeat="user in users track by $index">
+            <!--<div ng-click="selectPlayer($index)" ng-repeat="user in users track by $index">-->
+            <div ng-click="selectPlayer($index)" ng-repeat="user in users | filter:{ socketId: '!' + currentUser.socketId}">
                 <span>{{user.name}} - </span>
-                <span>{{user.status}}</span>
+                <span>{{user.status}} - {{user.socketId}}</span>
             </div>
             <!--<button ng-click='getUserList()'>click</button>
 
