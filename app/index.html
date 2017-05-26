@@ -50,28 +50,42 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="fluid-container">
         <!--<div ng-view=""></div>-->
 
         <div ng-controller="MainCtrl">
+            <div class="col-sm-4">
+                <h2>{{myName}}</h2>
 
-            <h2>{{myName}}</h2>
 
+                <input ng-model="toto" />
+                <button ng-click='newUser()'>click</button>
 
-            <input ng-model="toto" />
-            <button ng-click='newUser()'>click</button>
-
-            <!--<div ng-click="selectPlayer($index)" ng-repeat="user in users track by $index">-->
-            <div ng-click="selectPlayer($index)" ng-repeat="user in users | filter:{ socketId: '!' + currentUser.socketId}">
-                <span>{{user.name}} - </span>
-                <span>{{user.status}} - {{user.socketId}}</span>
-            </div>
-            <!--<button ng-click='getUserList()'>click</button>
+                <!--<div ng-click="selectPlayer($index)" ng-repeat="user in users track by $index">-->
+                <div ng-click="selectPlayer($index)" ng-repeat="user in users | filter:{ socketId: '!' + currentUser.socketId}">
+                    <span>{{user.name}} - </span>
+                    <span>{{user.status}} - {{user.socketId}}</span>
+                </div>
+                <!--<button ng-click='getUserList()'>click</button>
 
             <button ng-click="getConnected()">connected user</button>-->
-            <!--<div ng-repeat="user in connected">{{user}}</div>-->
+                <!--<div ng-repeat="user in connected">{{user}}</div>-->
 
-            <button ng-click='leaveRoom()'>Leave room</button>
+                <button ng-click='leaveRoom()'>Leave room</button>
+            </div>
+
+            <div class="col-sm-4">
+                <div ng-repeat="room in rooms" ng-click="joinRoom($index)">
+                    {{room.id}} - {room.roomId}
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div ng-repeat="member in selectedRoom">
+                    {{room.id}} - {room.roomId}
+                </div>
+            </div>
+
 
         </div>
     </div>
