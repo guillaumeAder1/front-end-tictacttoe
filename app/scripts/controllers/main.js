@@ -17,17 +17,34 @@ angular.module('frontendApp')
         $scope.rooms = [];
         $scope.selectedRoom = [];
 
-
-        $scope.newUser = function() {
-
+        io.socket.on('connect', function(res, d) {
+            // get list of users
+            io.socket.get('/user/getusers', function(res, users) {
+                $scope.users = users.body;
+                $scope.$apply();
+            });
+            // get list of rooms
             io.socket.get('/room', function(res, d) {
-                console.log(res, d)
+                if (d.error) {
+                    console.log('No Rooms created');
+                    return;
+                }
                 $scope.rooms = res;
                 $scope.$apply();
             });
+        });
+
+
+        $scope.newUser = function() {
+
+            // io.socket.get('/room', function(res, d) {
+            //     console.log(res, d)
+            //     $scope.rooms = res;
+            //     $scope.$apply();
+            // });
 
             io.socket.get("/user/newuser/" + $scope.toto, function(body, jwr) {
-                console.log('Sails responded with: ', body);
+
                 $scope.currentUser = body;
                 $scope.myName = body.name + " - " + body.socketId;
                 $scope.$apply();
@@ -38,6 +55,7 @@ angular.module('frontendApp')
                     $scope.users = body;
                     $scope.$apply();
                 });
+
             });
         };
 
@@ -65,12 +83,12 @@ angular.module('frontendApp')
             var players = [];
             players.push($scope.users[index]);
             players.push($scope.currentUser);
-
+            // this call create the room
             io.socket.post('/room', { name: roomName, roomId: roomName, players: players }, function(data) {
                 console.log(data);
                 $scope.rooms.push(data);
                 $scope.$apply();
-                // join a room
+                // current user join the room
                 io.socket.post('/room/' + data.roomId + '/' + $scope.currentUser.socketId);
                 //io.socekt.post('/room/' + data.roomId + '/' + $scope.users[index].socketId)
             });
@@ -87,11 +105,32 @@ angular.module('frontendApp')
         };
 
         io.socket.on('room-event', function(d, e) {
-            console.log(d, e);
-            alert(d.data);
+            console.log(" ROOM evetn " + d, e);
+            //alert(d.msg);
         });
 
         $scope.leaveRoom = function() {
             // io.socket.
         };
+
+        $scope.dropData = function() {
+            io.socket.get('/user/dropdata', function(res, body) {
+                console.log(res, body);
+            })
+        };
+
+        io.socket.on('user', function(data) {
+            alert("USER " + data.verb + " " + data.data.socketId);
+            $scope.users.push(data.data);
+            $scope.$apply();
+        });
+        io.socket.on('room', function(data) {
+            alert("ROOM " + data.verb + " " + data.data.socketId);
+            $scope.rooms.push(data.data);
+            $scope.$apply();
+        });
+
+        io.socket.on('message', function(d, e) {
+            console.log("MESSAGE event", d, e)
+        })
     });
