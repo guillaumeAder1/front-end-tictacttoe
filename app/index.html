@@ -54,6 +54,8 @@
     <div ng-controller="MainCtrl" class="fluid-container">
         <!--<div ng-view=""></div>-->
         <button ng-click="dropData()">clear data</button>
+        <button ng-click="createRoom()">create room</button>
+        <h5>{{message}}</h5>
 
         <div>
             <div class="col-sm-4">
@@ -73,8 +75,15 @@
             </div>
 
             <div class="col-sm-4">
+
                 <div ng-repeat="room in rooms" ng-click="joinRoom($index)">
-                    {{room.id}} - {{room.roomId}}
+                    <strong> {{room.id}} - {{room.roomId}} <br/>
+                    <ul>
+                        <li ng-repeat="player in room.users">
+                            {{player.name}}
+                        </li>
+                    </ul>
+                    </strong>
                 </div>
             </div>
 

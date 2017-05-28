@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('MainCtrl', function($scope, restApi) {
+    .controller('MainCtrl', function($scope, $filter, restApi) {
         $scope.toto = "toto";
         $scope.users = [];
         $scope.connected = [];
@@ -16,6 +16,7 @@ angular.module('frontendApp')
         $scope.myName = "";
         $scope.rooms = [];
         $scope.selectedRoom = [];
+        $scope.message = "";
 
         io.socket.on('connect', function(res, d) {
             // get list of users
@@ -95,11 +96,25 @@ angular.module('frontendApp')
         };
 
         $scope.joinRoom = function(index) {
-            var room = $scope.rooms[index];
-            io.socket.post('/room/' + room.roomId + '/' + $scope.currentUser.socketId);
+            // PREVISOU WAY 
+            // var room = $scope.rooms[index];
+            // io.socket.post('/room/' + room.roomId + '/' + $scope.currentUser.socketId);
 
-            io.socket.get('/room/' + room.roomId + '/members', function(res, d) {
-                console.log(res, d);
+            // io.socket.get('/room/' + room.roomId + '/members', function(res, d) {
+            //     console.log(res, d);
+            // });
+            var room = $scope.rooms[index];
+            var user = $scope.currentUser;
+            io.socket.post('/room/addplayer', { player: user, room: room }, function(res, data) {
+                console.log(res, data);
+            });
+
+        };
+
+        $scope.createRoom = function() {
+            io.socket.get('/room/create', { name: "room one", user: $scope.currentUser }, function(res, data) {
+                console.log(res, data);
+
             });
 
         };
@@ -120,17 +135,39 @@ angular.module('frontendApp')
         };
 
         io.socket.on('user', function(data) {
-            alert("USER " + data.verb + " " + data.data.socketId);
+            //alert("USER " + data.verb + " " + data.data.socketId);
+            alert("USER " + data.verb)
+
+            if (data.verb == 'messaged') {
+                $scope.message += "<br/> MESSAGED";
+                return;
+            }
+            $scope.message += "<br/> USER " + data.verb + " " + data.data.socketId
             $scope.users.push(data.data);
             $scope.$apply();
         });
         io.socket.on('room', function(data) {
-            alert("ROOM " + data.verb + " " + data.data.socketId);
-            $scope.rooms.push(data.data);
+            switch (data.verb) {
+                case 'created':
+                    $scope.rooms.push(data.data);
+                    break;
+                case 'updated':
+                    console.log(data);
+                    var room = $filter('filter')($scope.rooms, { id: data.id }, true);
+                    room[0].users.push(data.data.user)
+                        //$scope.rooms[]
+                    break;
+                case 'messaged':
+                    $scope.message += "<> MESSAGED";
+                    break;
+                default:
+                    //
+
+            }
             $scope.$apply();
         });
 
         io.socket.on('message', function(d, e) {
-            console.log("MESSAGE event", d, e)
+            console.log("MESSAGE event ++++++++++++++", d, e)
         })
     });
