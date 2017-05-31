@@ -9,6 +9,11 @@
  */
 angular.module('frontendApp')
     .controller('MainCtrl', function($scope, $filter, restApi) {
+        this.awesomeThings = [
+            'HTML5 Boilerplate',
+            'AngularJS',
+            'Karma'
+        ];
         $scope.toto = "toto";
         $scope.users = [];
         $scope.connected = [];
@@ -35,6 +40,15 @@ angular.module('frontendApp')
             });
         });
 
+        $scope.joinRoomManager = function(room) {
+            io.socket.get('/lobby/createLobby', { groupid: room.name }, function(data, socket) {
+                console.log(err, socket);
+                io.socket.on(data.room, function(obj) {
+                    console.log(obj);
+                    alert(obj)
+                });
+            })
+        };
 
         $scope.newUser = function() {
 
@@ -154,7 +168,7 @@ angular.module('frontendApp')
                 case 'updated':
                     console.log(data);
                     var room = $filter('filter')($scope.rooms, { id: data.id }, true);
-                    room[0].users.push(data.data.user)
+                    room[0].user.push(data.data.user)
                         //$scope.rooms[]
                     break;
                 case 'messaged':

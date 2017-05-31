@@ -78,9 +78,10 @@
 
                 <div ng-repeat="room in rooms" ng-click="joinRoom($index)">
                     <strong> {{room.id}} - {{room.roomId}} <br/>
+                    <button ng-click="joinRoomManager(room)">join</button>
                     <ul>
-                        <li ng-repeat="player in room.users">
-                            {{player.name}}
+                        <li ng-repeat="player in room.user">
+                            {{player.name}} - {{player.id}}
                         </li>
                     </ul>
                     </strong>
