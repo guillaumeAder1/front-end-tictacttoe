@@ -53,59 +53,7 @@
             </div>
         </div>
     </div>
-
-    <div ng-controller="MainCtrl" class="fluid-container">
-        <!--<div ng-view=""></div>-->
-        <button ng-click="dropData()">clear data</button>
-        <button ng-click="createRoom()">create room</button>
-        <h5>{{message}}</h5>
-
-        <div>
-            <div class="col-sm-4">
-                <h2>{{myName}}</h2>
-
-
-                <input ng-model="toto" />
-                <button ng-click='newUser()'>click</button>
-
-                <!--<div ng-click="selectPlayer($index)" ng-repeat="user in users">-->
-                <div ng-click="selectPlayer($index)" ng-repeat="user in users | filter:{ socketId: '!' + currentUser.socketId}">
-                    <span>{{user.name}} - </span>
-                    <span>{{user.status}} - {{user.socketId}}</span>
-                </div>
-
-                <!--<button ng-click='leaveRoom()'>Leave room</button>-->
-            </div>
-
-            <div class="col-sm-4">
-
-                <div ng-repeat="room in rooms" ng-click="joinRoom($index)">
-                    <strong> {{room.id}} - {{room.roomId}} <br/>
-                    <button ng-click="joinRoomManager(room)">join</button>
-                    <ul>
-                        <li ng-repeat="player in room.user">
-                            {{player.name}} - {{player.id}}
-                        </li>
-                    </ul>
-                    </strong>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div ng-repeat="member in selectedRoom">
-                    {{room.id}} - {{room.roomId}}
-                </div>
-            </div>
-
-
-
-
-
-        </div>
-    </div>
-
-
-
+    <div ng-view=""></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
@@ -139,6 +87,7 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/about.js"></script>
     <script src="scripts/services/restapi.js"></script>
+    <script src="scripts/controllers/work.js"></script>
     <!-- endbuild -->
 
 

@@ -9,28 +9,33 @@
  * Main module of the application.
  */
 angular
-  .module('frontendApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch'
-  ])
-  .config(function ($routeProvider,$locationProvider) {
-  $locationProvider.hashPrefix('');
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+    .module('frontendApp', [
+        'ngAnimate',
+        'ngCookies',
+        'ngResource',
+        'ngRoute',
+        'ngSanitize',
+        'ngTouch'
+    ])
+    .config(function($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix('');
+        $routeProvider
+            .when('/', {
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl',
+                controllerAs: 'main'
+            })
+            .when('/about', {
+                templateUrl: 'views/about.html',
+                controller: 'AboutCtrl',
+                controllerAs: 'about'
+            })
+            .when('/work', {
+              templateUrl: 'views/work.html',
+              controller: 'WorkCtrl',
+              controllerAs: 'work'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    });

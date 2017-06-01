@@ -1,0 +1,14 @@
+<input ng-model="search">
+
+<select ng-model="selection">
+    <option ng-repeat="type in types" value="type"/>
+</select>
+
+<div ng-repeat="work in works">
+    <h3>{{work.title}}</h3>
+    <img src="{{work.picture}}">
+    <p>
+        {{work.description.en}}
+    </p>
+    <span ng-repeat="tag in work.tags"> {{tag}}  </span>
+</div>

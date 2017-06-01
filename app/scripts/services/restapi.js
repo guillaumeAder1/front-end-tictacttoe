@@ -32,7 +32,7 @@ angular.module('frontendApp')
             getUserConnected: function() {
                 return $http.get(path + "user/getAllUsers").then(function(res) {
                     return res.data
-                })
+                });
             },
             someMethod: function() {
                 return meaningOfLife;
