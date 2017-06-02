@@ -15,7 +15,8 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch'
+        'ngTouch',
+        'esri.map'
     ])
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.hashPrefix('');
@@ -31,9 +32,14 @@ angular
                 controllerAs: 'about'
             })
             .when('/work', {
-              templateUrl: 'views/work.html',
-              controller: 'WorkCtrl',
-              controllerAs: 'work'
+                templateUrl: 'views/work.html',
+                controller: 'WorkCtrl',
+                controllerAs: 'work'
+            })
+            .when('/esrimap', {
+                templateUrl: 'views/esrimap.html',
+                controller: 'EsrimapCtrl',
+                controllerAs: 'esrimap'
             })
             .otherwise({
                 redirectTo: '/'
