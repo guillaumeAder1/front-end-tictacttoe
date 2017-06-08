@@ -1,0 +1,14 @@
+<p>This is the sailsApp view.</p>
+
+<div ng-click="createRoom()"> create room </div>
+
+<h3>Users</h3>
+
+<div ng-repeat="user in users">
+    {{user.name}} - {{user.id}}
+</div>
+
+<h3>Rooms</h3>
+<div ng-repeat="room in rooms">
+    Created by: {{room.createdBy}} - {{room.id}}
+</div>

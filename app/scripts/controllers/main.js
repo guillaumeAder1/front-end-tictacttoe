@@ -23,6 +23,9 @@ angular.module('frontendApp')
         $scope.selectedRoom = [];
         $scope.message = "";
 
+
+
+
         io.socket.on('connect', function(res, d) {
             // get list of users
             io.socket.get('/user/getusers', function(res, users) {
