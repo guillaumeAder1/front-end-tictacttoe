@@ -42,11 +42,11 @@ angular
                 controllerAs: 'esrimap'
             })
             .when('/sailsApp', {
-              templateUrl: 'views/sailsapp.html',
-              controller: 'SailsappCtrl',
-              controllerAs: 'sailsApp'
+                templateUrl: 'views/sailsapp.html',
+                controller: 'SailsappCtrl',
+                controllerAs: 'sailsApp'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/sailsApp'
             });
     });

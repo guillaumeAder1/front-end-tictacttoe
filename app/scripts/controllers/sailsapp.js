@@ -16,20 +16,41 @@ angular.module('frontendApp')
         ];
         $scope.users = [];
 
+        $scope.currentUser = {};
+
         var name = prompt('Enter your name');
         if (name) {
             $scope.name = name;
             io.socket.post('/SocketUser/create/', { name: name }, angular.bind(this, function(res) {
                 console.log(res);
+                $scope.currentUser = res;
                 this.getuserList();
                 this.getRoomList();
+
+                io.socket.on('subscriber', function(data) {
+                    console.log(data)
+                    alert(data.user.name, " has subscibe")
+                });
+
+                io.socket.on('socketroom', function(res, data) {
+                    console.log(res, data)
+                });
+
+                io.socket.on('socketuser', function(res, data) {
+                    console.log(res, data)
+                    if (res.verb === 'created') {
+                        $scope.users.push(res.data);
+                        $scope.$apply();
+                    }
+                });
+
             }));
         }
         $scope.createRoom = function() {
-            io.socket.post('/SocketRoom/create/', { createdBy: $scope.name }, angular.bind(this, function(res) {
+            io.socket.post('/SocketRoom/create/', { user: $scope.currentUser }, function(res) {
                 console.log(res);
                 this.getRoomList();
-            }));
+            });
         };
 
         this.getuserList = function() {
@@ -45,5 +66,21 @@ angular.module('frontendApp')
                 $scope.rooms = data.body;
                 $scope.$apply();
             });
+        };
+
+        $scope.joinRoom = function(index) {
+            //console.log(index)
+            io.socket.post('/SocketRoom/join', {
+                room: index.room,
+                user: $scope.currentUser
+            }, function(res, data) {
+                console.log(res, data)
+            })
+        }
+
+        $scope.dropData = function() {
+            io.socket.get('/SocketRoom/dropData', function(res, body) {
+                console.log(res, body);
+            })
         };
     });

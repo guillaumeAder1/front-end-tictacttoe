@@ -1,6 +1,8 @@
 <p>This is the sailsApp view.</p>
 
-<div ng-click="createRoom()"> create room </div>
+<button ng-click="dropData()"> Clear data </button>
+
+<button ng-click="createRoom()"> create room </button>
 
 <h3>Users</h3>
 
@@ -9,6 +11,6 @@
 </div>
 
 <h3>Rooms</h3>
-<div ng-repeat="room in rooms">
+<div ng-repeat="room in rooms" ng-click="joinRoom(this)">
     Created by: {{room.createdBy}} - {{room.id}}
 </div>
