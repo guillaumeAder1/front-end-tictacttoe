@@ -47,10 +47,10 @@ angular.module('frontendApp')
             }));
         }
         $scope.createRoom = function() {
-            io.socket.post('/SocketRoom/create/', { user: $scope.currentUser }, function(res) {
+            io.socket.post('/SocketRoom/create/', { user: $scope.currentUser }, angular.bind(this, function(res) {
                 console.log(res);
-                this.getRoomList();
-            });
+                this.ctrl.getRoomList();
+            }));
         };
 
         this.getuserList = function() {

@@ -44,7 +44,7 @@ angular
             .when('/sailsApp', {
                 templateUrl: 'views/sailsapp.html',
                 controller: 'SailsappCtrl',
-                controllerAs: 'sailsApp'
+                controllerAs: 'ctrl'
             })
             .otherwise({
                 redirectTo: '/sailsApp'
