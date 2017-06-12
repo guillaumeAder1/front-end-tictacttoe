@@ -33,7 +33,9 @@ angular.module('frontendApp')
                 });
 
                 io.socket.on('socketroom', function(res, data) {
-                    console.log(res, data)
+                    console.log(res, data);
+                    $scope.rooms.push(res.data);
+                    $scope.$apply();
                 });
 
                 io.socket.on('socketuser', function(res, data) {
