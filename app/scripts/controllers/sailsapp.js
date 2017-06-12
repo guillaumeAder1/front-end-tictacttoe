@@ -29,7 +29,7 @@ angular.module('frontendApp')
 
                 io.socket.on('subscriber', function(data) {
                     console.log(data)
-                    alert(data.user.name, " has subscibe")
+                        //alert(data.user.name, " has subscibe")
                 });
 
                 io.socket.on('socketroom', function(res, data) {
