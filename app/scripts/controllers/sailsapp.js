@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('SailsappCtrl', function($scope) {
+    .controller('SailsappCtrl', function($scope, $filter) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -27,10 +27,23 @@ angular.module('frontendApp')
                 this.getuserList();
                 this.getRoomList();
 
-                io.socket.on('subscriber', function(data) {
+                io.socket.on('subscriber', angular.bind(this, function(data) {
                     console.log(data)
-                        //alert(data.user.name, " has subscibe")
-                });
+                    if (data.roomReady) {
+                        //alert("room is ready")
+                        io.socket.get('/SocketRoom/get/' + data.room.id, function(res, data) {
+                            console.log(res, data)
+                            var newTemp = $filter("filter")($scope.rooms, { id: res.id });
+                            for (var i in $scope.rooms) {
+                                if ($scope.rooms[i].id == res.id) {
+                                    $scope.rooms[i] = res;
+                                    $scope.$apply();
+                                }
+                            }
+                        });
+                    }
+                    //alert(data.user.name, " has subscibe")
+                }));
 
                 io.socket.on('socketroom', function(res, data) {
                     console.log(res, data);
