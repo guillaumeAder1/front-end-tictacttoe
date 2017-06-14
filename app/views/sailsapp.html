@@ -1,8 +1,10 @@
 <p>This is the sailsApp view.</p>
 
-<button ng-click="dropData()"> Clear data </button>
+<input id="userName" type="text" ng-model="_username" /> <button id="login" ng-click="ctrl.userLogin()">enter</button>
 
-<button ng-click="createRoom()"> create room </button>
+<button id="clearData" ng-click="dropData()"> Clear data </button>
+
+<button id="createRoom" ng-click="createRoom()"> create room </button>
 
 <h3>Users</h3>
 

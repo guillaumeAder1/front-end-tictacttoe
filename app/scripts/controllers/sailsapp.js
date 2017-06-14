@@ -18,49 +18,55 @@ angular.module('frontendApp')
 
         $scope.currentUser = {};
 
-        var name = prompt('Enter your name');
-        if (name) {
-            $scope.name = name;
-            io.socket.post('/SocketUser/create/', { name: name }, angular.bind(this, function(res) {
-                console.log(res);
-                $scope.currentUser = res;
-                this.getuserList();
-                this.getRoomList();
+        this.userLogin = function() {
+            var name = $scope._username;
 
-                io.socket.on('subscriber', angular.bind(this, function(data) {
-                    console.log(data)
-                    if (data.roomReady) {
-                        //alert("room is ready")
-                        io.socket.get('/SocketRoom/get/' + data.room.id, function(res, data) {
-                            console.log(res, data)
-                            var newTemp = $filter("filter")($scope.rooms, { id: res.id });
-                            for (var i in $scope.rooms) {
-                                if ($scope.rooms[i].id == res.id) {
-                                    $scope.rooms[i] = res;
-                                    $scope.$apply();
+            if (name) {
+                $scope.name = name;
+                io.socket.post('/SocketUser/create/', { name: name }, angular.bind(this, function(res) {
+                    console.log(res);
+                    $scope.currentUser = res;
+                    this.getuserList();
+                    this.getRoomList();
+
+                    io.socket.on('subscriber', angular.bind(this, function(data) {
+                        console.log(data)
+                        if (data.roomReady) {
+                            //alert("room is ready")
+                            io.socket.get('/SocketRoom/get/' + data.room.id, function(res, data) {
+                                console.log(res, data)
+                                var newTemp = $filter("filter")($scope.rooms, { id: res.id });
+                                for (var i in $scope.rooms) {
+                                    if ($scope.rooms[i].id == res.id) {
+                                        $scope.rooms[i] = res;
+                                        $scope.$apply();
+                                    }
                                 }
-                            }
-                        });
-                    }
-                    //alert(data.user.name, " has subscibe")
-                }));
+                            });
+                        }
+                        //alert(data.user.name, " has subscibe")
+                    }));
 
-                io.socket.on('socketroom', function(res, data) {
-                    console.log(res, data);
-                    $scope.rooms.push(res.data);
-                    $scope.$apply();
-                });
-
-                io.socket.on('socketuser', function(res, data) {
-                    console.log(res, data)
-                    if (res.verb === 'created') {
-                        $scope.users.push(res.data);
+                    io.socket.on('socketroom', function(res, data) {
+                        console.log(res, data);
+                        $scope.rooms.push(res.data);
                         $scope.$apply();
-                    }
-                });
+                    });
 
-            }));
+                    io.socket.on('socketuser', function(res, data) {
+                        console.log(res, data)
+                        if (res.verb === 'created') {
+                            $scope.users.push(res.data);
+                            $scope.$apply();
+                        }
+                    });
+
+                }));
+            }
         }
+
+        //var name = prompt('Enter your name');
+
         $scope.createRoom = function() {
             io.socket.post('/SocketRoom/create/', { user: $scope.currentUser }, angular.bind(this, function(res) {
                 console.log(res);
