@@ -9,6 +9,11 @@
  */
 angular.module('frontendApp')
     .controller('WorkCtrl', function($scope, $http) {
+        this.awesomeThings = [
+            'HTML5 Boilerplate',
+            'AngularJS',
+            'Karma'
+        ];
         // init vars
         $scope.works = [];
         $scope.search = "all";

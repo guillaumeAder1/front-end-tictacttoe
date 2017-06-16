@@ -6,18 +6,25 @@ describe('Controller: MainCtrl', function() {
     beforeEach(module('frontendApp'));
 
     var MainCtrl,
-        scope;
+        scope, io;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
         scope = $rootScope.$new();
+        io = {
+            socket: {
+                on: function() {}
+            }
+        }
         MainCtrl = $controller('MainCtrl', {
-            $scope: scope
+            $scope: scope,
+            io: io
                 // place here mocked dependencies
         });
     }));
 
     it('should attach a list of awesomeThings to the scope', function() {
-        expect(MainCtrl.awesomeThings.length).toBe(3);
+        expect(io).not.toBe(null);
+        //expect(MainCtrl).not.toBeNull();
     });
 });
