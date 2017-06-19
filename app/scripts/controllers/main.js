@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('MainCtrl', function($scope, $filter, restApi) {
+    .controller('MainCtrl', function($scope, $filter, restApi, socketIO) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -23,9 +23,10 @@ angular.module('frontendApp')
         $scope.selectedRoom = [];
         $scope.message = "";
 
-        var io = window.io;
+        var io;
+        this.io = io = socketIO.connect();
 
-
+        //this.onConnect = function() {
         io.socket.on('connect', function(res, d) {
             // get list of users
             io.socket.get('/user/getusers', function(res, users) {
@@ -42,6 +43,8 @@ angular.module('frontendApp')
                 $scope.$apply();
             });
         });
+        //}
+
 
         // $scope.joinRoomManager = function(room) {
         //     io.socket.get('/lobby/createLobby', { groupid: room.name }, function(data, socket) {

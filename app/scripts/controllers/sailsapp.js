@@ -16,7 +16,7 @@ example how to use angular an socket io adn make the unti test Work
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('SailsappCtrl', function($scope, $filter) {
+    .controller('SailsappCtrl', function($scope, $filter, socketIO) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -25,6 +25,8 @@ angular.module('frontendApp')
         $scope.users = [];
 
         $scope.currentUser = {};
+
+        var io = socketIO.connect();
 
         this.userLogin = function() {
             var name = $scope._username;
@@ -71,7 +73,7 @@ angular.module('frontendApp')
 
                 }));
             }
-        }
+        };
 
         //var name = prompt('Enter your name');
 
@@ -104,12 +106,12 @@ angular.module('frontendApp')
                 user: $scope.currentUser
             }, function(res, data) {
                 console.log(res, data)
-            })
-        }
+            });
+        };
 
         $scope.dropData = function() {
             io.socket.get('/SocketRoom/dropData', function(res, body) {
                 console.log(res, body);
-            })
+            });
         };
     });

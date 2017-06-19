@@ -1,30 +1,29 @@
 'use strict';
 
-describe('Controller: MainCtrl', function() {
+describe('Controller:MainCtrl', function() {
 
     // load the controller's module
     beforeEach(module('frontendApp'));
 
     var MainCtrl,
-        scope, io;
+        scope;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function($controller, $rootScope) {
+    beforeEach(inject(function($controller, $rootScope, socketIO) {
         scope = $rootScope.$new();
-        io = {
-            socket: {
-                on: function() { return true; }
-            }
-        }
         MainCtrl = $controller('MainCtrl', {
             $scope: scope,
-            io: io
-                // place here mocked dependencies
+            //io: socketIO.connect()
+            // place here mocked dependencies
         });
     }));
 
-    it('should attach a list of awesomeThings to the scope', function() {
+    it('controller is loaded properly', function() {
         expect(MainCtrl).not.toBe(null);
-        //expect(MainCtrl).not.toBeNull();
+        console.log("************** IS socket IO loaded ***********************");
+        console.log(MainCtrl.io);
+        expect(MainCtrl.io).not.toBe(null);
     });
+
+
 });
