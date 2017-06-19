@@ -1,5 +1,13 @@
 'use strict';
 
+/*
+example how to use angular an socket io adn make the unti test Work
+
+    https://loopback.io/doc/en/lb2/Realtime-socket-io.html
+    https://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
+*/
+
+
 /**
  * @ngdoc function
  * @name frontendApp.controller:SailsappCtrl

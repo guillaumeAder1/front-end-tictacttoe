@@ -13,7 +13,7 @@ describe('Controller: MainCtrl', function() {
         scope = $rootScope.$new();
         io = {
             socket: {
-                on: function() {}
+                on: function() { return true; }
             }
         }
         MainCtrl = $controller('MainCtrl', {
@@ -24,7 +24,7 @@ describe('Controller: MainCtrl', function() {
     }));
 
     it('should attach a list of awesomeThings to the scope', function() {
-        expect(io).not.toBe(null);
+        expect(MainCtrl).not.toBe(null);
         //expect(MainCtrl).not.toBeNull();
     });
 });
