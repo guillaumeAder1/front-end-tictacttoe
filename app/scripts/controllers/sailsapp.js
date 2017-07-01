@@ -1,13 +1,5 @@
 'use strict';
 
-/*
-example how to use angular an socket io adn make the unti test Work
-
-    https://loopback.io/doc/en/lb2/Realtime-socket-io.html
-    https://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
-*/
-
-
 /**
  * @ngdoc function
  * @name frontendApp.controller:SailsappCtrl
@@ -16,7 +8,7 @@ example how to use angular an socket io adn make the unti test Work
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('SailsappCtrl', function($scope, $filter, socketIO) {
+    .controller('SailsappCtrl', function($scope, $filter) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -26,12 +18,7 @@ angular.module('frontendApp')
 
         $scope.currentUser = {};
 
-<<<<<<< HEAD
         // when new user created
-=======
-        var io = socketIO.connect();
-
->>>>>>> 6bf1b0f995d623b2b20bd7e3a586d64214f21295
         this.userLogin = function() {
 
             var name = $scope._username;
@@ -45,11 +32,11 @@ angular.module('frontendApp')
                     this.getuserList();
                     this.getRoomList();
 
-                    // listener when someone else subscribe to my room
+                    // listener when someone else subscribe to my room      
                     io.socket.on('subscriber', angular.bind(this, function(data) {
                         console.log(data)
                         if (data.roomReady) {
-                            //alert("room is ready")
+                            // get and refresh the room list
                             io.socket.get('/SocketRoom/get/' + data.room.id, function(res, data) {
                                 console.log(res, data)
                                 var newTemp = $filter("filter")($scope.rooms, { id: res.id });
@@ -79,7 +66,7 @@ angular.module('frontendApp')
 
                 }));
             }
-        };
+        }
 
 
         this.createRoom = function() {
@@ -111,18 +98,13 @@ angular.module('frontendApp')
                 user: $scope.currentUser
             }, function(res, data) {
                 console.log(res, data)
-<<<<<<< HEAD
                 if (res.error) { alert(res.error); }
             })
         }
-=======
-            });
-        };
->>>>>>> 6bf1b0f995d623b2b20bd7e3a586d64214f21295
 
         this.dropData = function() {
             io.socket.get('/SocketRoom/dropData', function(res, body) {
                 console.log(res, body);
-            });
+            })
         };
     });
