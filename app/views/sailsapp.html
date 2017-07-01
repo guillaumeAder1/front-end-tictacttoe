@@ -2,9 +2,9 @@
 
 <input id="userName" type="text" ng-model="_username" /> <button id="login" ng-click="ctrl.userLogin()">enter</button>
 
-<button id="clearData" ng-click="dropData()"> Clear data </button>
+<button id="clearData" ng-click="ctrl.dropData()"> Clear data </button>
 
-<button id="createRoom" ng-click="createRoom()"> create room </button>
+<button id="createRoom" ng-click="ctrl.createRoom()"> create room </button>
 
 <h3>Users</h3>
 
@@ -13,7 +13,7 @@
 </div>
 
 <h3>Rooms</h3>
-<div ng-repeat="room in rooms" ng-click="joinRoom(this)">
+<div ng-repeat="room in rooms" ng-click="ctrl.joinRoom(this)">
     <strong>Created by: {{room.createdBy}} - {{room.id}} </strong>
     <span ng-repeat="player in room.players"><br/>{{player.name}}</span>
 </div>

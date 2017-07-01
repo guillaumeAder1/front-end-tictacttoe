@@ -18,17 +18,21 @@ angular.module('frontendApp')
 
         $scope.currentUser = {};
 
+        // when new user created
         this.userLogin = function() {
+
             var name = $scope._username;
 
             if (name) {
                 $scope.name = name;
+                // create a new user
                 io.socket.post('/SocketUser/create/', { name: name }, angular.bind(this, function(res) {
                     console.log(res);
                     $scope.currentUser = res;
                     this.getuserList();
                     this.getRoomList();
 
+                    // listener when someone else subscribe to my room
                     io.socket.on('subscriber', angular.bind(this, function(data) {
                         console.log(data)
                         if (data.roomReady) {
@@ -44,15 +48,14 @@ angular.module('frontendApp')
                                 }
                             });
                         }
-                        //alert(data.user.name, " has subscibe")
                     }));
-
+                    // listener for Room controller 
                     io.socket.on('socketroom', function(res, data) {
                         console.log(res, data);
                         $scope.rooms.push(res.data);
                         $scope.$apply();
                     });
-
+                    // listener for User controller
                     io.socket.on('socketuser', function(res, data) {
                         console.log(res, data)
                         if (res.verb === 'created') {
@@ -65,12 +68,11 @@ angular.module('frontendApp')
             }
         }
 
-        //var name = prompt('Enter your name');
 
-        $scope.createRoom = function() {
+        this.createRoom = function() {
             io.socket.post('/SocketRoom/create/', { user: $scope.currentUser }, angular.bind(this, function(res) {
                 console.log(res);
-                this.ctrl.getRoomList();
+                this.getRoomList();
             }));
         };
 
@@ -89,17 +91,18 @@ angular.module('frontendApp')
             });
         };
 
-        $scope.joinRoom = function(index) {
+        this.joinRoom = function(index) {
             //console.log(index)
             io.socket.post('/SocketRoom/join', {
                 room: index.room,
                 user: $scope.currentUser
             }, function(res, data) {
                 console.log(res, data)
+                if (res.error) { alert(res.error); }
             })
         }
 
-        $scope.dropData = function() {
+        this.dropData = function() {
             io.socket.get('/SocketRoom/dropData', function(res, body) {
                 console.log(res, body);
             })
