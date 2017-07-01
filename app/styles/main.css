@@ -1,5 +1,17 @@
 /*CUSTOM CSS GUILLAUME*/
 
+
+/* tic tact toie grid */
+
+.grid div div {
+    border: 1px solid black;
+    padding: 15px;
+    marign: 15px;
+}
+
+
+/* tic tact toie grid */
+
 .header .fluid-container {
     border-bottom: 1.5px dotted #83171a;
 }

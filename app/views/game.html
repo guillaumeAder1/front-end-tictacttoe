@@ -1,0 +1,30 @@
+<p>This is the game view.</p>
+
+
+grid
+
+<div class="grid container">
+    <div class="row" ng-repeat="row in ctrl.grid">
+        <div class="col-sm-4" ng-repeat="cell in row" ng-click="ctrl.clickCell(cell)">
+            {{cell.name}}
+        </div>
+    </div>
+</div>
+
+<!--<div class="grid container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>-->
