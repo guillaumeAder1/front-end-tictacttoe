@@ -18,6 +18,10 @@ angular.module('frontendApp')
 
         $scope.currentUser = {};
 
+        this.myRooom = false;
+
+        this.message = "";
+
         // when new user created
         this.userLogin = function() {
 
@@ -35,7 +39,11 @@ angular.module('frontendApp')
                     // listener when someone else subscribe to my room      
                     io.socket.on('subscriber', angular.bind(this, function(data) {
                         console.log(data)
+
+                        if (data.message) { this.newMessage(data); }
                         if (data.roomReady) {
+
+                            this.myRoom = data;
                             // get and refresh the room list
                             io.socket.get('/SocketRoom/get/' + data.room.id, function(res, data) {
                                 console.log(res, data)
@@ -98,13 +106,36 @@ angular.module('frontendApp')
                 user: $scope.currentUser
             }, function(res, data) {
                 console.log(res, data)
-                if (res.error) { alert(res.error); }
+                if (res && res.error) { alert(res.error); }
             })
-        }
+        };
 
+        // clear the data (destroy collection room and users)
         this.dropData = function() {
             io.socket.get('/SocketRoom/dropData', function(res, body) {
                 console.log(res, body);
             })
         };
+
+        // send a message to user in the same room
+        this.postMessage = function() {
+            if (!this.myRoom) {
+                return false;
+            }
+
+            io.socket.post('/SocketRoom/postMessage', {
+                data: {
+                    msg: $scope._messageToUser,
+                    roomName: this.myRoom.room.createdBy + "-" + this.myRoom.room.id
+                }
+            }, function(res, body) {
+                console.log(res, body);
+            })
+        };
+
+
+        this.newMessage = function(msg) {
+            this.message = msg.message;
+            $scope.$apply();
+        }
     });

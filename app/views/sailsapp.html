@@ -6,6 +6,13 @@
 
 <button id="createRoom" ng-click="ctrl.createRoom()"> create room </button>
 
+<button id="sendMessage" ng-click="ctrl.postMessage()"> Message User </button>
+
+
+<input ng-model="_messageToUser" />
+
+<div>{{ctrl.message}}</div>
+
 <h3>Users</h3>
 
 <div ng-repeat="user in users">
