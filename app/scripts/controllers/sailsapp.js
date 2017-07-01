@@ -1,5 +1,13 @@
 'use strict';
 
+/*
+example how to use angular an socket io adn make the unti test Work
+
+    https://loopback.io/doc/en/lb2/Realtime-socket-io.html
+    https://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
+*/
+
+
 /**
  * @ngdoc function
  * @name frontendApp.controller:SailsappCtrl
@@ -8,7 +16,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('SailsappCtrl', function($scope, $filter) {
+    .controller('SailsappCtrl', function($scope, $filter, socketIO) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -18,7 +26,12 @@ angular.module('frontendApp')
 
         $scope.currentUser = {};
 
+<<<<<<< HEAD
         // when new user created
+=======
+        var io = socketIO.connect();
+
+>>>>>>> 6bf1b0f995d623b2b20bd7e3a586d64214f21295
         this.userLogin = function() {
 
             var name = $scope._username;
@@ -66,7 +79,7 @@ angular.module('frontendApp')
 
                 }));
             }
-        }
+        };
 
 
         this.createRoom = function() {
@@ -98,13 +111,18 @@ angular.module('frontendApp')
                 user: $scope.currentUser
             }, function(res, data) {
                 console.log(res, data)
+<<<<<<< HEAD
                 if (res.error) { alert(res.error); }
             })
         }
+=======
+            });
+        };
+>>>>>>> 6bf1b0f995d623b2b20bd7e3a586d64214f21295
 
         this.dropData = function() {
             io.socket.get('/SocketRoom/dropData', function(res, body) {
                 console.log(res, body);
-            })
+            });
         };
     });
