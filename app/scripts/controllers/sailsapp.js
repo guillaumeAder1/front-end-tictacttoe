@@ -22,6 +22,9 @@ angular.module('frontendApp')
 
         this.message = "";
 
+        //$scope.msgtest = 'hello world';
+        this.msgtest = 'hello world';
+
         // when new user created
         this.userLogin = function() {
 
