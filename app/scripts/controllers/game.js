@@ -8,12 +8,14 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-    .controller('GameCtrl', function() {
+    .controller('GameCtrl', function($scope) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
+        console.log(this.userid, $scope.userid);
+
         // init grid and status
         this.grid = [
             [{ name: 'a1' }, { name: 'a2' }, { name: 'a3' }],
@@ -24,7 +26,6 @@ angular.module('frontendApp')
         // cell click event
         this.clickCell = function(cell) {
             console.log(cell);
-
         };
 
 
