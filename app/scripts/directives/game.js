@@ -13,6 +13,7 @@ angular.module('frontendApp')
         controller: 'GameCtrl',
         controllerAs: 'ctrl',
         bindings: {
-            userid: '<'
+            userid: '<',
+            roomid: '<'
         }
     });

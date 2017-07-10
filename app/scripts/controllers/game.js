@@ -26,7 +26,25 @@ angular.module('frontendApp')
         // cell click event
         this.clickCell = function(cell) {
             console.log(cell);
+            cell.value = "X";
+            io.socket.post('/SocketRoom/postMessage', {
+                data: {
+                    msg: 'play',
+                    grid: this.grid,
+                    roomName: this.roomid
+                }
+            }, function(res, body) {
+                console.log(res, body);
+            })
         };
+
+        this.initGameEvent = function() {
+            io.socket.on('subscriber', angular.bind(this, function(data) {
+                console.log(data)
+            }));
+        };
+
+        this.initGameEvent();
 
 
     });

@@ -24,6 +24,7 @@ angular.module('frontendApp')
 
         //$scope.msgtest = 'hello world';
         this.msgtest = 'hello world';
+        this.roomId = '';
 
         // when new user created
         this.userLogin = function() {
@@ -125,6 +126,7 @@ angular.module('frontendApp')
             if (!this.myRoom) {
                 return false;
             }
+            this.roomId = this.myRoom.room.createdBy + "-" + this.myRoom.room.id;
 
             io.socket.post('/SocketRoom/postMessage', {
                 data: {

@@ -1,11 +1,12 @@
 <p>This is the game view.</p>
 
-{{userid}} grid {{ctrl.userid}} grid {{$ctrl.userid}} grid {{userid}} grid
+user id var = {{ctrl.userid}}
+<br/> roomid = {{ctrl.roomid}}
 
-<div class="grid container">
+<div ng-if="ctrl.roomid" class="grid container">
     <div class="row" ng-repeat="row in ctrl.grid">
         <div class="col-sm-4" ng-repeat="cell in row" ng-click="ctrl.clickCell(cell)">
-            {{cell.name}}
+            {{cell.value}}
         </div>
     </div>
 </div>
